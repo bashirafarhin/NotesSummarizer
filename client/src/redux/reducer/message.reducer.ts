@@ -23,8 +23,6 @@ export const fetchAllMessages = createAsyncThunk<
     );
     return res.data.messages as Message[];
   } catch (error: unknown) {
-    console.error("Failed to fetch messages:", error);
-
     if (axios.isAxiosError(error)) {
       return rejectWithValue(
         error.response?.data?.message || "Something went wrong"
@@ -35,9 +33,14 @@ export const fetchAllMessages = createAsyncThunk<
   }
 });
 
+export interface SendMessagePayload {
+  user: Message;
+  ai: Message;
+}
+
 export const sendMessage = createAsyncThunk<
-  Message, // Return type
-  string, // Argument type
+  SendMessagePayload,
+  string,
   { rejectValue: string }
 >("messages/send", async (content, { rejectWithValue }) => {
   try {
@@ -46,16 +49,13 @@ export const sendMessage = createAsyncThunk<
       { content },
       { withCredentials: true }
     );
-    return res.data as Message;
+    return res.data as SendMessagePayload;
   } catch (error: unknown) {
-    console.log(error);
-
     if (axios.isAxiosError(error)) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to send message"
       );
     }
-
     return rejectWithValue("Failed to send message");
   }
 });

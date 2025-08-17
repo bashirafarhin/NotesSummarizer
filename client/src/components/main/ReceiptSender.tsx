@@ -76,24 +76,25 @@ const ReceiptSender: React.FC<ReceiptSenderProps> = ({ messageId }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-2 flex items-center gap-2"
+      className="mt-2 flex flex-col gap-1"
     >
-      <input
-        type="text"
-        placeholder="Enter emails, comma separated"
-        {...register("emails")}
-        className="flex-grow p-2 bg-gray-900 text-white rounded-md text-sm outline-none"
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className="shrink-0 p-2 bg-gray-800 hover:bg-gray-900 rounded-full hover:cursor-pointer disabled:opacity-50"
-      >
-        {loading ? "Sending..." : "Send"}
-      </button>
-
-      {success && <Check className="text-green-500" size={20} />}
-      {error && <X className="text-red-500" size={20} />}
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          placeholder="Enter emails, comma separated"
+          {...register("emails")}
+          className="flex-grow p-2 bg-gray-900 text-white rounded-md text-sm outline-none"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="shrink-0 p-2 bg-gray-800 hover:bg-gray-900 rounded-full hover:cursor-pointer disabled:opacity-50"
+        >
+          {loading ? "Sending..." : "Send"}
+        </button>
+        {success && <Check className="text-green-500" size={20} />}
+        {error && <X className="text-red-500" size={20} />}
+      </div>
       {errors.emails && (
         <p className="text-red-500 text-xs">{errors.emails.message}</p>
       )}

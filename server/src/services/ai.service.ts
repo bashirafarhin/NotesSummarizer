@@ -84,7 +84,6 @@ Output ONLY the structured summary following the above rules.
     const result = await model.generateContent(prompt);
     return result.response.text();
   } catch (error) {
-    console.error("Error generating summary:", error);
     throw new Error("Failed to generate summary");
   }
 }

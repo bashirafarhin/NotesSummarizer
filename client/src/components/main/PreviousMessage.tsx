@@ -14,15 +14,10 @@ const PreviousMessage = () => {
     loading,
     error,
   } = useSelector((state: RootState) => state.message);
-  console.log(messages);
 
   useEffect(() => {
     dispatch(fetchAllMessages());
   }, [dispatch]);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   if (error) {
     return <div className="text-red-500">Error: {error}</div>;
@@ -41,6 +36,7 @@ const PreviousMessage = () => {
           ))}
         </>
       )}
+      {loading && <Loader />}
     </div>
   );
 };

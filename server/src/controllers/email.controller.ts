@@ -22,7 +22,6 @@ export const sendEmailsToRecipients = async (req: Request, res: Response) => {
       message: "Emails sent successfully",
     });
   } catch (error) {
-    console.error("Email sending error:", error);
     return res.status(500).json({ error: "Failed to send emails" });
   }
 };

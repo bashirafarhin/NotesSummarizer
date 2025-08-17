@@ -2,6 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAllMessages, sendMessage } from "../reducer/message.reducer";
 import { Message } from "@/lib/types/message";
 
+export interface SendMessagePayload {
+  user: Message;
+  ai: Message;
+}
+
 // State interface
 interface MessageState {
   data: Message[];
@@ -41,11 +46,14 @@ const messageSlice = createSlice({
       .addCase(sendMessage.pending, (state) => {
         state.loading = true;
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data.push(action.payload.user); // add new message to state
-        state.data.push(action.payload.ai);
-      })
+      .addCase(
+        sendMessage.fulfilled,
+        (state, action: PayloadAction<SendMessagePayload>) => {
+          state.loading = false;
+          state.data.push(action.payload.user);
+          state.data.push(action.payload.ai);
+        }
+      )
       .addCase(sendMessage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
